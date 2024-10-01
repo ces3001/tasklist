@@ -17,9 +17,18 @@ A note can represent an entire project (or person, or anything), which can have 
 	- I suggest you put it in a folder named `scripts` or wherever you like.
 - If you want the right-hand sidebar render to be smaller, install `smaller_class.css` as an Obsidian *CSS snippet*.
 # Usage
+## Simplest usage
+Include a `dataviewjs` code-block in the note like so, and it’ll show you the tasks associated with the current note.
+````
+```dataviewjs
+await dv.view("tasklist");
+```
+````
+
+Or, you can use the provided `Tasks.md` file, and pin it on the right-hand sidebar in Reading View mode. That will show all tasks (and associated tasks from the vault) for any note you are on, and keep easy access.
 ## Conventions
 You must adhere to these conventions for this to work:
-- aliases within the note should be:
+- `aliases` within the note’s properties should be:
 	- first, the note's identifier tag. e.g. `#projects/myproject`
 	- second, any number of words that identify the note, e.g. `My Project`
 	- Frontmatter ("Properties") example: `aliases: ["#projects/myproject", "My Project", "other additional", "aliases ok"]`, where the first alias is the tag that identifies this project or person. (tag can also not be first, but that may break other thigns)
@@ -40,15 +49,8 @@ Optional frontmatter or inline fields `includeTasksFrom` and `excludeTasksWith`
     - syntax inline (note double `:`, and no outer brackets): `includeTasksFrom:: "str1","str2"`
 - Notes with tag `#ignoretasks` will prevent any task on that page to be listed.
 - Notes with tag `#multiproject` will hide all its tasks, except those tagged with our tag.
-## Simplest usage
-Include a `dataviewjs` code-block in the note like so:
-````
-```dataviewjs
-await dv.view("tasklist");
-```
-````
 
-## Usage with custimization parameters
+## Usage with customization parameters
 Include a `dataviewjs` code-block in the note (with all options, all optional):
 ````
 ```dataviewjs
@@ -79,6 +81,8 @@ In the code itself, you can customize `avoidFolders` to hide tasks in notes from
 
 # Known Issues
 - If a page has a task with a tag, even if completed, then all tasks on that page will be seen when `tasksFromTaggedPages=True` in a query from the "master" page of that tag. The desired result would be that only that task be recognized as tagged, not the whole page (and thus every task). This can be mitigated by using the `#ignoretasks` and `#multiproject` tags on the note with the tasks.
+- Sometimes, the `Tasks.md` page momentarily looses track of the page you are on. If so, then click in the note you want to use, and invoke the command `Dataview: Force refresh all views and blocks`. I suggest you map `Cmd-R` to the command.
+- Dataview refreshes automatically every time you update a file (even as you type), and this can be annoying and loose your view on the current file. The Dataview author is aware of this limitation, and is working on an major rewrite. To mitigate this: use `Tasks.md` in the sidebar, or create a header above the tasklist code-block in the current note, and fold the header collapsed until needed.
 
 # History
 
