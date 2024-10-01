@@ -18,11 +18,3 @@ await dv.view("scripts/tasklist", {thePage: activeFile,
 	tasksFromTaggedPages:tasksFromTaggedPages,
 	tasksFromIncludedPages:true});
 ```
-
-# Log
-## Mon, September 30, 2024
-#date/2024/09/30 [12:12PM -1000]
-<% tp.file.cursor(1) %>
-## Conversation with Mark - Mon, September 30, 2024
-#date/2024/09/30 [11:59AM -1000]
-<% tp.file.cursor(1) %>
