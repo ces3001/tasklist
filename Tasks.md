@@ -12,7 +12,7 @@ if (!activeFile || activeFile == "Tasks.md") {
 	//   (for example, when a task is checked off).
 	activeFile = app.workspace.getLastOpenFiles()[0];
 }
-await dv.view("scripts/tasklist", {thePage: activeFile,
+await dv.view("tasklist", {thePage: activeFile,
 	tasksFromThisPage:true, 
 	taggedTasksFromAnywhere:true, 
 	tasksFromTaggedPages:tasksFromTaggedPages,

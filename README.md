@@ -1,4 +1,4 @@
-# tasklist
+# Tasklist
 Show all tasks for a note and any associated links elsewhere in vault. 
 A note can represent an entire project (or person, or anything), which can have tasks in other pages, subnotes, or subprojects.
 
@@ -7,13 +7,14 @@ A note can represent an entire project (or person, or anything), which can have 
 
 # Install
 ## Requirements
-- dataview plug-in
-- Not required, but highly recommended, tasks plug-in.
+- [dataview](https://blacksmithgu.github.io/obsidian-dataview/) plug-in
+- Not required, but highly recommended, [tasks](https://github.com/obsidian-tasks-group/obsidian-tasks) plug-in.
+- [meta-bind](https://github.com/mProjectsCode/obsidian-meta-bind-plugin) plugin required for easy toggle of “Include Tagged Pages”, but not necessary.
 ## Files
 - Copy `Tasks.md` into your vault.
-  - I suggest you pin it in the right-hand sidebar
+	- I suggest you pin it in the right-hand sidebar
 - Copy `tasklist.js` into your vault
-  - I suggest you put it in a folder named `scripts` or whatever you like.
+	- I suggest you put it in a folder named `scripts` or whatever you like.
 
 # Usage
 ## Conventions
@@ -27,23 +28,23 @@ You must adhere to these conventions for this to work:
 - Tasks can have standard formatting, with the following feature:
   - Any of the following "priority" emojis will affect the sorting: 🔺,⏫,🔼,(no emoji=no priority),🔽,⏬.
 ### Including or excluding tasks
-Optional frontmatter or inline fields includeTasksFrom and excludeTasksWith
--	includeTasksFrom <note>[,...]
-  -	syntax in frontmatter (note outer brackets and links in quotes) `includeTasksFrom: ["[[link1]]","[[link2]]"]`
-  - syntax inline (note double "::", and no outer brackets or quotes). `includeTasksFrom:: [[link1]],[[link2]]`
-- excludeTasksWith <str>[,...]
-  - syntax in frontmatter (note outer brackets): `includeTasksFrom: ["str1","str2"]`
-  - syntax inline (note double "::", and no outer brackets): `includeTasksFrom:: "str1","str2"`
+Optional frontmatter or inline fields `includeTasksFrom` and `excludeTasksWith`
+- `includeTasksFrom <note>[,...]`
+    - syntax in frontmatter (note outer brackets and links in quotes): `includeTasksFrom: ["[[link1]]","[[link2]]"]`
+    - syntax inline (note double `:`, and no outer brackets or quotes): `includeTasksFrom:: [[link1]],[[link2]]`
+- `excludeTasksWith <str>[,...]`
+    -  syntax in frontmatter (note outer brackets): `includeTasksFrom: ["str1","str2"]`
+    - syntax inline (note double `:`, and no outer brackets): `includeTasksFrom:: "str1","str2"`
 - Notes with tag `#ignoretasks` will prevent any task on that page to be listed. 
 ## Simplest usage
 to include in notes (simplest): 
 ```dataviewjs
-await dv.view("scripts/tasklist");
+await dv.view("tasklist");
 ```
 ## Usage with custimization parameters
 to include in notes (with all options, all optional):
 ```dataviewjs
-await dv.view("scripts/tasklist", {thePage: "Optional page name", tasksFromThisPage:true, taggedTasksFromAnywhere:true, tasksFromTaggedPages:true, tasksFromIncludedPages:true, ifTaskTaggedThenOnlyIfOurTag:true, includeSection:true, summary:true});
+await dv.view("tasklist", {thePage: "Optional page name", tasksFromThisPage:true, taggedTasksFromAnywhere:true, tasksFromTaggedPages:true, tasksFromIncludedPages:true, ifTaskTaggedThenOnlyIfOurTag:true, includeSection:true, summary:true});
 ```
 
 ### Customization
@@ -53,9 +54,9 @@ All parameters are optional (defaults to current page, and all the rest of the p
 - `taggedTasksFromAnywhere`: if true, include tasks from all other pages, where the task's text matches any of the aliases of thePage, which ought to include a tag, and also could include any string
 - `tasksFromTaggedPages`: if true, bring in all tasks from any page that contains thePage's associated tag (the first alias with `#`), unless they contain either #multiproject or #ignoretasks tags. !! If any task on a page is marked with our tag, it will bring in ALL tasks from that page.
 - `tasksFromIncludedPages`: if true, look at includeTasksFrom field, and pull tasks in from those pages.
-- `ifTaskTaggedThenOnlyIfOurTag`: if true, will only include a task if a) it contains our tag, or b) contains no tag, and matches one of our aliases. This allows us to filter out tasks that may match our non-tag alias by accident. For example, "Ian" is an alias to my brother, but I don't want that match "Ian Baker", so I tag the Ian Baker tasks with a tag for that project #project/IanBaker, and it will no longer match my brother's project because he has a different tag (e.g. #family/brother). In other words, if a task has been found which matchs a non-tag alias (simple words) of thePage, it will be ignored if it contains a tag that isn't thePage's tag. 
-- `includeSection`: if true, will group tasks by section, as well as file
-summary: if true, show "From x: 25 tasks" or "No available tasks." summary line (e.g. turn off (set to false) when doing concatenating task lists from various files)
+- `ifTaskTaggedThenOnlyIfOurTag`: if true, will only include a task if a) it contains our tag, or b) contains no tag, and matches one of our aliases. This allows us to filter out tasks that may match our non-tag alias by accident. For example, "George" is an alias to my brother, but I don't want that match "George Clooney", so I tag the George Clooney tasks with a tag for that project #project/GeorgeClooney, and it will no longer match my brother's project because he has a different tag (e.g. #family/brother). In other words, if a task has been found which matches a non-tag alias (simple words) of thePage, it will be ignored if it contains a tag that isn't thePage's tag. 
+- `includeSection`: if true, will group tasks by section, as well as file 
+- `summary`: if true, show "From <x>: 25 tasks" or "No available tasks." summary line (e.g. turn off (set to false) when doing concatenating task lists from various files)
 
 # Known Issues
 - If a page has a task with a tag, even if completed, then all tasks on that page will be seen when tasksFromTaggedPages=True in a query from the "master" page of that tag. The desired result would be that only that task be recognized as tagged, not the whole page (and thus every task).
